@@ -1,12 +1,14 @@
 import React, { useState } from 'react';
-import Signin from "./Signin";
+import Signin from './Signin';
+import Main from './main';
 
 export default () => {
-  const [name, setName] = useState("") //useStateの中身に初期値を設定可能
-  console.log({name});
+  const [name, setName] = useState(''); //useStateの中身に初期値を設定可能
+  console.log({ name });
 
-  return (
-    <Signin setName={setName}/> //SigninコンポへsetNameの値を渡す
-    
-  )
+  if (name === '') {
+    return <Signin setName={setName} />;
+  } else {
+    return <Main name={name} />;
+  }
 };
