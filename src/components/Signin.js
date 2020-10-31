@@ -1,25 +1,27 @@
-import React from 'react'
-import Button from '@material-ui/core/Button'
-import CssBaseline from '@material-ui/core/CssBaseline'
-import TextField from '@material-ui/core/TextField'
-import Link from '@material-ui/core/Link'
-import Box from '@material-ui/core/Box'
-import Typography from '@material-ui/core/Typography'
-import { makeStyles } from '@material-ui/core/styles'
-import Container from '@material-ui/core/Container'
+import React, { useState, useEffect } from 'react';
+import Button from '@material-ui/core/Button';
+import CssBaseline from '@material-ui/core/CssBaseline';
+import TextField from '@material-ui/core/TextField';
+import Link from '@material-ui/core/Link';
+import Box from '@material-ui/core/Box';
+import Typography from '@material-ui/core/Typography';
+import { makeStyles } from '@material-ui/core/styles';
+import Container from '@material-ui/core/Container';
 
 function Copyright() {
   return (
     <Typography variant="body2" color="textSecondary" align="center">
       {'Copyright © '}
-      <Link color="inherit" href="#"
+      <Link
+        color="inherit"
+        href="#"
         target="_blank"
-        rel="noopener"　// 脆弱性に対する処置
+        rel="noopener" // 脆弱性に対する処置
       >
         kazu
       </Link>{' '}
     </Typography>
-  )
+  );
 }
 
 const useStyles = makeStyles((theme) => ({
@@ -40,10 +42,19 @@ const useStyles = makeStyles((theme) => ({
   submit: {
     margin: theme.spacing(3, 0, 2),
   },
-}))
+}));
 
 export default function SignIn({ setName }) {
-  const classes = useStyles()
+  const classes = useStyles();
+  const [disabled, setDisabled] = useState(true);
+  const [string, setString] = useState('');
+  console.log({ string });
+
+  // useEffect 条件付きで副作用を実行、今回の監視対象はString（この対象は複数渡すことが可能）
+  useEffect(() => {
+    const disabled = string === '';
+    setDisabled(disabled);
+  }, [string]);
 
   return (
     <Container component="main" maxWidth="xs">
@@ -62,13 +73,18 @@ export default function SignIn({ setName }) {
             label="ニックネーム"
             name="name"
             autoFocus
+            onChange={(e) => setString(e.target.value)}
           />
           <Button
-            type="submit"
+            type="button"
             fullWidth
             variant="contained"
             color="primary"
             className={classes.submit}
+            disabled={disabled}
+            onClick={() => {
+              setName(string);
+            }}
           >
             Join！
           </Button>
@@ -78,5 +94,5 @@ export default function SignIn({ setName }) {
         <Copyright />
       </Box>
     </Container>
-  )
+  );
 }
