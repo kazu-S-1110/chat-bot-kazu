@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { TextField } from '@material-ui/core';
+import { pushMessage } from '../firebase';
 
 const MessageField = ({ name, setText, text }) => {
   const [isComposed, setIsComposed] = useState(false); //編集中であるか識別するState
@@ -15,7 +16,7 @@ const MessageField = ({ name, setText, text }) => {
         if (text === '') return; //空文字の場合であればなにも処理しない
 
         if (e.key === 'Enter') {
-          console.log('push message to firebase');
+          pushMessage({ name: 'wt', text });
           setText('');
           e.preventDefault(); //画面のリロードを防げる
         }
