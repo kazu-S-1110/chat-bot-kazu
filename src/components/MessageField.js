@@ -2,11 +2,13 @@ import React, { useState } from 'react';
 import { TextField } from '@material-ui/core';
 import { pushMessage } from '../firebase';
 
-const MessageField = ({ name, setText, text }) => {
+const MessageField = ({ inputEl, name, setText, text }) => {
   const [isComposed, setIsComposed] = useState(false); //編集中であるか識別するState
 
   return (
     <TextField
+      autoFocus
+      inputRef={inputEl}
       onChange={(e) => setText(e.target.value)}
       fullWidth={true}
       onKeyDown={(e) => {
@@ -14,7 +16,6 @@ const MessageField = ({ name, setText, text }) => {
 
         const text = e.target.value;
         if (text === '') return; //空文字の場合であればなにも処理しない
-
         if (e.key === 'Enter') {
           pushMessage({ name: 'wt', text });
           setText('');
