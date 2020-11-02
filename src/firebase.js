@@ -12,8 +12,8 @@ const firebaseConfig = {
 firebase.initializeApp(firebaseConfig);
 
 const database = firebase.database(); //これがFirebaseコンソール上のデータベースを参照している
-const messageRef = database.ref('messages'); //リファレンスを作成する
+const messagesRef = database.ref('messages'); //リファレンスを作成する
 
 export const pushMessage = ({ name, text }) => {
-  messageRef.push({ name, text });
+  messagesRef.push({ name, text });
 };
