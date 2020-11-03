@@ -17,7 +17,7 @@ const MessageField = ({ inputEl, name, setText, text }) => {
         const text = e.target.value;
         if (text === '') return; //空文字の場合であればなにも処理しない
         if (e.key === 'Enter') {
-          pushMessage({ name: 'wt', text });
+          pushMessage({ name, text });
           setText('');
           e.preventDefault(); //画面のリロードを防げる
         }
